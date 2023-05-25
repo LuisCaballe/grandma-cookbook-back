@@ -10,3 +10,8 @@ export type UserCredentialsRequest = Request<
   Record<string, unknown>,
   UserCredentials
 >;
+
+export interface UserStructure extends UserCredentials {
+  _id: string;
+  name: string;
+}
