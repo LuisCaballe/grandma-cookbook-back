@@ -21,6 +21,8 @@ app.use(morgan("dev"));
 
 app.use(express.json());
 
+app.disable("x-powered-by");
+
 app.get("/", pingController);
 
 app.use(notFoundError);
