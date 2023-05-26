@@ -6,6 +6,14 @@ import { type UserStructure, type UserCredentialsRequest } from "../../types";
 import CustomError from "../../../CustomError/CustomError";
 import User from "../../../database/models/User";
 import { loginUser } from "./userControllers";
+import {
+  correctResponse,
+  unauthorizedResponse,
+} from "../../utils/responseData/responseData";
+
+beforeEach(() => {
+  jest.clearAllMocks();
+});
 
 describe("Given a loginUser controller", () => {
   const req: Partial<UserCredentialsRequest> = {
@@ -24,6 +32,7 @@ describe("Given a loginUser controller", () => {
     const token = "mock-token";
 
     test("Then it should call the response's method status with 200", async () => {
+      const expectedStatusCode = correctResponse.statusCode;
       const mockedUser: UserStructure = {
         _id: new Types.ObjectId().toString(),
         username: "luis",
@@ -45,7 +54,7 @@ describe("Given a loginUser controller", () => {
         next as NextFunction
       );
 
-      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.status).toHaveBeenCalledWith(expectedStatusCode);
     });
 
     test("Then it should call the response's method json with the token", async () => {
@@ -61,7 +70,10 @@ describe("Given a loginUser controller", () => {
 
   describe("When it receives a request with a wrong username and a next function", () => {
     test("Then it should call the next function with a 401 and 'Wrong credentials' message", async () => {
-      const expectedError = new CustomError(401, "Wrong credentials");
+      const expectedError = new CustomError(
+        unauthorizedResponse.statusCode,
+        unauthorizedResponse.message
+      );
 
       bcrypt.compare = jest.fn().mockResolvedValue(false);
 
