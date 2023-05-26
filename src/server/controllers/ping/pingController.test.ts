@@ -1,5 +1,6 @@
 import { type Request, type Response } from "express";
 import pingController from "./pingController.js";
+import { correctResponse } from "../../utils/responseData/responseData.js";
 
 describe("Given a pingController controller", () => {
   describe("When it receives a respnse", () => {
@@ -10,7 +11,7 @@ describe("Given a pingController controller", () => {
     };
 
     test("Then it should call the response's method status with 200", () => {
-      const expectedStatus = 200;
+      const expectedStatus = correctResponse.statusCode;
 
       pingController(req as Request, res as Response);
 

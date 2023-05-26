@@ -1,11 +1,19 @@
 import { type NextFunction, type Response } from "express";
-import { Types } from "mongoose";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
-import { type UserStructure, type UserCredentialsRequest } from "../../types";
+import { type UserCredentialsRequest } from "../../types";
 import CustomError from "../../../CustomError/CustomError";
 import User from "../../../database/models/User";
 import { loginUser } from "./userControllers";
+import {
+  correctResponse,
+  unauthorizedResponse,
+} from "../../utils/responseData/responseData";
+import { mockedUser } from "../../../mocks/mocks";
+
+beforeEach(() => {
+  jest.clearAllMocks();
+});
 
 describe("Given a loginUser controller", () => {
   const req: Partial<UserCredentialsRequest> = {
@@ -24,12 +32,7 @@ describe("Given a loginUser controller", () => {
     const token = "mock-token";
 
     test("Then it should call the response's method status with 200", async () => {
-      const mockedUser: UserStructure = {
-        _id: new Types.ObjectId().toString(),
-        username: "luis",
-        password: "luis",
-        name: "Luis",
-      };
+      const expectedStatusCode = correctResponse.statusCode;
 
       User.findOne = jest.fn().mockReturnValue({
         exec: jest.fn().mockResolvedValue(mockedUser),
@@ -45,7 +48,7 @@ describe("Given a loginUser controller", () => {
         next as NextFunction
       );
 
-      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.status).toHaveBeenCalledWith(expectedStatusCode);
     });
 
     test("Then it should call the response's method json with the token", async () => {
@@ -61,7 +64,10 @@ describe("Given a loginUser controller", () => {
 
   describe("When it receives a request with a wrong username and a next function", () => {
     test("Then it should call the next function with a 401 and 'Wrong credentials' message", async () => {
-      const expectedError = new CustomError(401, "Wrong credentials");
+      const expectedError = new CustomError(
+        unauthorizedResponse.statusCode,
+        unauthorizedResponse.message
+      );
 
       bcrypt.compare = jest.fn().mockResolvedValue(false);
 

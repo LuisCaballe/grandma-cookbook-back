@@ -6,7 +6,8 @@ import {
   generalError,
   notFoundError,
 } from "./middlewares/errorMiddlewares/errorMiddlewares.js";
-import paths from "./paths/paths.js";
+import paths from "./utils/paths/paths.js";
+import userRouter from "./routers/user/userRouter.js";
 
 const app = express();
 
@@ -25,6 +26,8 @@ app.use(express.json());
 app.disable("x-powered-by");
 
 app.get(paths.pingController, pingController);
+
+app.use(paths.userControllers, userRouter);
 
 app.use(notFoundError);
 

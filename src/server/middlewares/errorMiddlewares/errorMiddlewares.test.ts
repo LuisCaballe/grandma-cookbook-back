@@ -1,8 +1,15 @@
 import { type NextFunction, type Request, type Response } from "express";
 import CustomError from "../../../CustomError/CustomError";
 import { generalError, notFoundError } from "./errorMiddlewares";
+import {
+  generalErrorResponse,
+  notFoundResponse,
+} from "../../utils/responseData/responseData";
 
-const expectedError = new CustomError(404, "Endpoint not found");
+const expectedError = new CustomError(
+  notFoundResponse.statusCode,
+  notFoundResponse.message
+);
 const req = {};
 const next = jest.fn();
 
@@ -25,7 +32,7 @@ describe("Given a generalError middleware", () => {
   };
   describe("When it receives a 404 'Endpoint not found' error and a response", () => {
     test("Then it should call the response's method status with 404", () => {
-      const expectedStatusCode = 404;
+      const expectedStatusCode = notFoundResponse.statusCode;
 
       generalError(
         expectedError,
@@ -38,7 +45,7 @@ describe("Given a generalError middleware", () => {
     });
 
     test("Then it should call the response's json with a 'Endpoint not found' message", () => {
-      const expectedMessage = "Endpoint not found";
+      const expectedMessage = notFoundResponse.message;
 
       generalError(
         expectedError,
@@ -54,7 +61,7 @@ describe("Given a generalError middleware", () => {
   describe("when it receives an error without status code and a response", () => {
     const error = new Error();
     test("Then it should call the response's method status with 500", () => {
-      const expectedStatus = 500;
+      const expectedStatus = generalErrorResponse.statusCode;
 
       generalError(
         error as CustomError,
@@ -67,7 +74,7 @@ describe("Given a generalError middleware", () => {
     });
 
     test("Then it should call the response's method json with a message 'General error", () => {
-      const expectedMessage = "General error";
+      const expectedMessage = generalErrorResponse.message;
 
       generalError(
         error as CustomError,
