@@ -32,6 +32,7 @@ export const generalError = (
   _next: NextFunction
 ) => {
   debug(`Error: ${chalk.red(error.message)}`);
+
   if (error instanceof ValidationError && error.details.body) {
     const validationError = error.details.body
       .map((joiError) => joiError.message.replaceAll('"', ""))

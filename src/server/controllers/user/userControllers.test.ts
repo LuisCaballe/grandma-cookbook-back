@@ -1,8 +1,7 @@
 import { type NextFunction, type Response } from "express";
-import { Types } from "mongoose";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
-import { type UserStructure, type UserCredentialsRequest } from "../../types";
+import { type UserCredentialsRequest } from "../../types";
 import CustomError from "../../../CustomError/CustomError";
 import User from "../../../database/models/User";
 import { loginUser } from "./userControllers";
@@ -10,6 +9,7 @@ import {
   correctResponse,
   unauthorizedResponse,
 } from "../../utils/responseData/responseData";
+import { mockedUser } from "../../../mocks/mocks";
 
 beforeEach(() => {
   jest.clearAllMocks();
@@ -33,12 +33,6 @@ describe("Given a loginUser controller", () => {
 
     test("Then it should call the response's method status with 200", async () => {
       const expectedStatusCode = correctResponse.statusCode;
-      const mockedUser: UserStructure = {
-        _id: new Types.ObjectId().toString(),
-        username: "luis",
-        password: "luis",
-        name: "Luis",
-      };
 
       User.findOne = jest.fn().mockReturnValue({
         exec: jest.fn().mockResolvedValue(mockedUser),

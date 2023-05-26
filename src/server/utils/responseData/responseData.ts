@@ -1,26 +1,26 @@
-import {
-  type UnauthorizedErrorStructure as UnauthorizedResponseStructure,
-  type NotFoundErrorStructure as NotFoundResponseStructure,
-  type GeneralErrorStructure as GeneralErrorResponseStructure,
-  type correctResponseStructure,
-} from "./types";
+import { type ResponseStructure } from "./types";
 
-export const notFoundResponse: NotFoundResponseStructure = {
+export const notFoundResponse: ResponseStructure = {
   statusCode: 404,
   message: "Endpoint not found",
 };
 
-export const unauthorizedResponse: UnauthorizedResponseStructure = {
+export const unauthorizedResponse: ResponseStructure = {
   statusCode: 401,
   message: "Wrong credentials",
 };
 
-export const generalErrorResponse: GeneralErrorResponseStructure = {
+export const generalErrorResponse: ResponseStructure = {
   statusCode: 500,
   message: "General error",
 };
 
-export const correctResponse: correctResponseStructure = {
+export const correctResponse: ResponseStructure = {
   statusCode: 200,
   message: "OK",
+};
+
+export const failedValidationResponse: ResponseStructure = {
+  statusCode: 400,
+  message: "Validation Failed",
 };
