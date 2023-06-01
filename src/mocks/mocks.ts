@@ -29,3 +29,13 @@ export const mockedUser: UserStructure = {
   password: "luis",
   name: "Luis",
 };
+
+export const mockToken =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDZmYTA3NzVhNjE1Y2Q5ZTMzODhjYTkiLCJuYW1lIjoiQWRtaW4iLCJpYXQiOjE2ODU2NDAwMjEsImV4cCI6MTY4NjA3MjAyMX0.A_Pehhtah2R9DxQO2Hrb6GrFyWiXq3EKbdx2MrqnzIo";
+
+export const mockTokenPayload = {
+  sub: "646fa0775a615cd9e3388ca9",
+  name: "Admin",
+  iat: 1685640021,
+  exp: 1686072021,
+};
