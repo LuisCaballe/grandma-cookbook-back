@@ -15,3 +15,7 @@ export interface UserStructure extends UserCredentials {
   _id?: string;
   name: string;
 }
+
+export interface CustomRequest extends Request {
+  id: string;
+}
