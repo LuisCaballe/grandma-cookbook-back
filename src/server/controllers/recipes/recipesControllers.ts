@@ -7,8 +7,8 @@ export const getRecipes = async (
   res: Response,
   next: NextFunction
 ) => {
+  const { id } = req;
   try {
-    const { id } = req;
     const recipes = await Recipe.find({ user: id }).limit(10).exec();
 
     res.status(200).json({ recipes });

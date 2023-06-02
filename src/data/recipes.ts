@@ -5,7 +5,7 @@ export const mockRecipes: RecipeDatabaseStructure[] = [
   {
     _id: new Types.ObjectId("647100635a615cd9e3388cab"),
     name: "Fried egg",
-    imageUrl: "",
+    imageUrl: "image1",
     cookingTime: 10,
     difficulty: "Easy",
     directions: "Just fry a egg",
@@ -15,7 +15,7 @@ export const mockRecipes: RecipeDatabaseStructure[] = [
   {
     _id: new Types.ObjectId("647102745a615cd9e3388cae"),
     name: "Boiled egg",
-    imageUrl: "",
+    imageUrl: "image1",
     cookingTime: 10,
     difficulty: "Easy",
     directions: "Just boil a egg",

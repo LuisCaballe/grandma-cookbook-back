@@ -3,14 +3,14 @@ import { MongoMemoryServer } from "mongodb-memory-server";
 import request from "supertest";
 import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
-import connectToDatabase from "../../../database/connectToDatabase";
-import User from "../../../database/models/User";
+import connectToDatabase from "../../../database/connectToDatabase.js";
+import User from "../../../database/models/User.js";
 import app from "../../index.js";
 import {
   correctResponse,
   failedValidationResponse,
-} from "../../utils/responseData/responseData";
-import { unauthorizedResponse } from "../../utils/responseData/responseData";
+} from "../../utils/responseData/responseData.js";
+import { unauthorizedResponse } from "../../utils/responseData/responseData.js";
 import {
   mockFailedValidationCredentials,
   mockUser,
