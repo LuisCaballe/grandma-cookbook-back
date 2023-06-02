@@ -1,8 +1,9 @@
-import { type NextFunction, type Request, type Response } from "express";
+import { type NextFunction, type Response } from "express";
 import { getRecipes } from "./recipesControllers";
 import Recipe from "../../../database/models/Recipe";
 import { mockRecipes } from "../../../data/recipes";
 import { correctResponse } from "../../utils/responseData/responseData";
+import { type CustomRequest } from "../../types";
 
 beforeEach(() => {
   jest.clearAllMocks();
@@ -24,13 +25,21 @@ describe("Given a getRecipes controller", () => {
     test("Then it should call the response's method status with 200", async () => {
       const expectedStatus = correctResponse.statusCode;
 
-      await getRecipes(req as Request, res as Response, next as NextFunction);
+      await getRecipes(
+        req as CustomRequest,
+        res as Response,
+        next as NextFunction
+      );
 
       expect(res.status).toHaveBeenCalledWith(expectedStatus);
     });
 
     test("Then it should call the response's method json with a list of recipes", async () => {
-      await getRecipes(req as Request, res as Response, next as NextFunction);
+      await getRecipes(
+        req as CustomRequest,
+        res as Response,
+        next as NextFunction
+      );
 
       expect(res.json).toHaveBeenCalledWith({ recipes: mockRecipes });
     });
@@ -44,7 +53,11 @@ describe("Given a getRecipes controller", () => {
         exec: jest.fn().mockRejectedValue(expectedError),
       });
 
-      await getRecipes(req as Request, res as Response, next as NextFunction);
+      await getRecipes(
+        req as CustomRequest,
+        res as Response,
+        next as NextFunction
+      );
 
       expect(next).toHaveBeenCalledWith(expectedError);
     });
