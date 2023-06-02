@@ -4,6 +4,7 @@ const paths: PathStructure = {
   pingController: "/",
   loginController: "/login",
   userControllers: "/user",
+  recipesControllers: "/recipes",
 };
 
 export default paths;
