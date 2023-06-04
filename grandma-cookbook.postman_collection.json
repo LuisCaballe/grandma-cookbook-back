@@ -7,7 +7,7 @@
   },
   "item": [
     {
-      "name": "GET /ping",
+      "name": "GET ping",
       "request": {
         "method": "GET",
         "header": [],
@@ -41,6 +41,31 @@
           "host": ["localhost"],
           "port": "4000",
           "path": ["user", "login"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GET /recipes",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDZmYTA3NzVhNjE1Y2Q5ZTMzODhjYTkiLCJuYW1lIjoiQWRtaW4iLCJpYXQiOjE2ODU2NDcyNzQsImV4cCI6MTY4NjA3OTI3NH0.aiBxmdtOcJZS1LnZfZWLgL2DvgqDi2_m6henn3hlOAU",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:4000/recipes",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "4000",
+          "path": ["recipes"]
         }
       },
       "response": []
