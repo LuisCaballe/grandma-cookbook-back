@@ -29,6 +29,7 @@ export const removeRecipe = async (
 
     if (!removedRecipe) {
       res.status(404).json({ message: "Recipe not found" });
+      return;
     }
 
     res.status(200).json({ message: "Recipe deleted" });

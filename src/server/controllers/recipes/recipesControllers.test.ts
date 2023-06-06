@@ -1,9 +1,9 @@
 import { type NextFunction, type Response } from "express";
-import { getRecipes } from "./recipesControllers";
+import { getRecipes, removeRecipe } from "./recipesControllers";
 import Recipe from "../../../database/models/Recipe";
 import { mockRecipes } from "../../../data/recipes";
 import { correctResponse } from "../../utils/responseData/responseData";
-import { type CustomRequest } from "../../types";
+import { type CustomParamsRequest, type CustomRequest } from "../../types";
 
 beforeEach(() => {
   jest.clearAllMocks();
@@ -55,6 +55,73 @@ describe("Given a getRecipes controller", () => {
 
       await getRecipes(
         req as CustomRequest,
+        res as Response,
+        next as NextFunction
+      );
+
+      expect(next).toHaveBeenCalledWith(expectedError);
+    });
+  });
+});
+
+describe("Given a removeRecipe controller", () => {
+  const req: Partial<CustomParamsRequest> = {
+    params: {
+      recipeId: mockRecipes[0]._id.toString(),
+    },
+  };
+  const res: Partial<Response> = {
+    status: jest.fn().mockReturnThis(),
+    json: jest.fn(),
+  };
+  const next = jest.fn();
+
+  describe("When it receives a valid recipe id", () => {
+    test("Then it should call the response's method status with 200", async () => {
+      const expectedStatus = 200;
+
+      Recipe.findByIdAndDelete = jest.fn().mockReturnValue({
+        exec: jest.fn().mockResolvedValue(mockRecipes[0]),
+      });
+
+      await removeRecipe(
+        req as CustomParamsRequest,
+        res as Response,
+        next as NextFunction
+      );
+
+      expect(res.status).toHaveBeenCalledWith(expectedStatus);
+    });
+  });
+
+  describe("When it receives a invalid recipe id", () => {
+    test("Then it should call the response's method status with 404", async () => {
+      const expectedStatus = 404;
+
+      Recipe.findByIdAndDelete = jest.fn().mockReturnValue({
+        exec: jest.fn().mockResolvedValue(undefined),
+      });
+
+      await removeRecipe(
+        req as CustomParamsRequest,
+        res as Response,
+        next as NextFunction
+      );
+
+      expect(res.status).toHaveBeenCalledWith(expectedStatus);
+    });
+  });
+
+  describe("When it receives a next function and the exec method rejects with a 'Error connecting to database'", () => {
+    test("Then it should call next function with the error 'Error connecting to database'", async () => {
+      const expectedError = new Error("Error connecting to database");
+
+      Recipe.findByIdAndDelete = jest.fn().mockReturnValue({
+        exec: jest.fn().mockRejectedValue(expectedError),
+      });
+
+      await removeRecipe(
+        req as CustomParamsRequest,
         res as Response,
         next as NextFunction
       );
