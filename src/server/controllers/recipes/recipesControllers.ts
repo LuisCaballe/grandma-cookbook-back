@@ -1,6 +1,6 @@
 import { type NextFunction, type Response } from "express";
 import Recipe from "../../../database/models/Recipe.js";
-import { type CustomRequest } from "../../types.js";
+import { type CustomParamsRequest, type CustomRequest } from "../../types.js";
 
 export const getRecipes = async (
   req: CustomRequest,
@@ -12,6 +12,26 @@ export const getRecipes = async (
     const recipes = await Recipe.find({ user: id }).limit(10).exec();
 
     res.status(200).json({ recipes });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const removeRecipe = async (
+  req: CustomParamsRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { recipeId } = req.params;
+
+    const removedRecipe = await Recipe.findByIdAndDelete(recipeId).exec();
+
+    if (!removedRecipe) {
+      res.status(404).json({ message: "Recipe not found" });
+    }
+
+    res.status(200).json({ message: "Recipe deleted" });
   } catch (error) {
     next(error);
   }
