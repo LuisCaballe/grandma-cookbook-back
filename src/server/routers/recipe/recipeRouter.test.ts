@@ -8,6 +8,7 @@ import Recipe from "../../../database/models/Recipe.js";
 import { mockRecipes } from "../../../data/recipes.js";
 import { mockToken } from "../../../mocks/mocks.js";
 import app from "../../index.js";
+import paths from "../../utils/paths/paths.js";
 
 let server: MongoMemoryServer;
 
@@ -25,11 +26,11 @@ afterEach(async () => {
   await Recipe.deleteMany();
 });
 
-describe("Given a GET '/recipes' endpoint", () => {
-  beforeEach(async () => {
-    await Recipe.create(mockRecipes);
-  });
+beforeEach(async () => {
+  await Recipe.create(mockRecipes);
+});
 
+describe("Given a GET '/recipes' endpoint", () => {
   describe("When it receives a request with valid authorization", () => {
     test("Then it should respond with status 200 and a collection of recipes", async () => {
       const expectedStatus = correctResponse.statusCode;
@@ -40,6 +41,22 @@ describe("Given a GET '/recipes' endpoint", () => {
         .expect(expectedStatus);
 
       expect(response.body.recipes).toHaveLength(2);
+    });
+  });
+});
+
+describe("Given a DELETE '/recipes' endpoint", () => {
+  describe("When it receives a request with valid authorization", () => {
+    test("Then it should respond with status 200 and a message 'Recipe deleted'", async () => {
+      const expectedStatus = 200;
+      const expectedMessage = "Recipe deleted";
+
+      const response = await request(app)
+        .delete(`${paths.recipesControllers}/${mockRecipes[0]._id.toString()}`)
+        .set("Authorization", `Bearer ${mockToken}`)
+        .expect(expectedStatus);
+
+      expect(response.body.message).toBe(expectedMessage);
     });
   });
 });
