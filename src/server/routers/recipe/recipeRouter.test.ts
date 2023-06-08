@@ -5,8 +5,7 @@ import connectToDatabase from "../../../database/connectToDatabase.js";
 import mongoose from "mongoose";
 import request from "supertest";
 import Recipe from "../../../database/models/Recipe.js";
-import { mockRecipes } from "../../../data/recipes.js";
-import { mockToken } from "../../../mocks/mocks.js";
+import { mockRecipes, mockToken } from "../../../mocks/mocks.js";
 import app from "../../index.js";
 import paths from "../../utils/paths/paths.js";
 
