@@ -1,9 +1,9 @@
 import { type NextFunction, type Response } from "express";
 import { getRecipes, removeRecipe } from "./recipesControllers";
 import Recipe from "../../../database/models/Recipe";
-import { mockRecipes } from "../../../data/recipes";
 import { correctResponse } from "../../utils/responseData/responseData";
 import { type CustomParamsRequest, type CustomRequest } from "../../types";
+import { mockRecipes } from "../../../mocks/mocks";
 
 beforeEach(() => {
   jest.clearAllMocks();

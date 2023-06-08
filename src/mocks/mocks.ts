@@ -1,6 +1,7 @@
 import { Types } from "mongoose";
 import { type FailedValidationRequest } from "../server/routers/user/types.js";
 import { type UserCredentials, type UserStructure } from "../server/types.js";
+import { type RecipeDatabaseStructure } from "../types.js";
 
 export const mockUser: UserStructure = {
   name: "Luis",
@@ -31,7 +32,7 @@ export const mockedUser: UserStructure = {
 };
 
 export const mockToken =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDZmYTA3NzVhNjE1Y2Q5ZTMzODhjYTkiLCJuYW1lIjoiQWRtaW4iLCJpYXQiOjE2ODU3MDM4MzcsImV4cCI6MTY4NjEzNTgzN30.wSV_V1Ngy1vGMKbpX9zLl--tkkUc0gcVt-izDaWy7OY";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDZmYTA3NzVhNjE1Y2Q5ZTMzODhjYTkiLCJuYW1lIjoiQWRtaW4iLCJpYXQiOjE2ODYyNDA0ODMsImV4cCI6MTY4ODgzMjQ4M30.PWLMYB32veBysHcp1HDB0xYCSAqqu1plOzGO4UZktc8";
 
 export const mockTokenPayload = {
   sub: "646fa0775a615cd9e3388ca9",
@@ -39,3 +40,26 @@ export const mockTokenPayload = {
   iat: 1685640021,
   exp: 1686072021,
 };
+
+export const mockRecipes: RecipeDatabaseStructure[] = [
+  {
+    _id: new Types.ObjectId("647100635a615cd9e3388cab"),
+    name: "Fried egg",
+    imageUrl: "image1",
+    cookingTime: 10,
+    difficulty: "Easy",
+    directions: "Just fry a egg",
+    ingredients: "Oil, egg",
+    user: new Types.ObjectId("646fa0775a615cd9e3388ca9"),
+  },
+  {
+    _id: new Types.ObjectId("647102745a615cd9e3388cae"),
+    name: "Boiled egg",
+    imageUrl: "image1",
+    cookingTime: 10,
+    difficulty: "Easy",
+    directions: "Just boil a egg",
+    ingredients: "Water, egg",
+    user: new Types.ObjectId("646fa0775a615cd9e3388ca9"),
+  },
+];
