@@ -10,3 +10,12 @@ export interface RecipeDatabaseStructure {
   user: Types.ObjectId;
   _id: Types.ObjectId;
 }
+
+export interface RecipeStructure {
+  name: string;
+  imageUrl: string;
+  ingredients: string;
+  directions: string;
+  difficulty: string;
+  cookingTime: number;
+}

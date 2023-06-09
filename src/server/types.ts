@@ -1,4 +1,5 @@
 import { type Request } from "express";
+import { type RecipeStructure } from "../types";
 
 export interface UserCredentials {
   username: string;
@@ -17,12 +18,9 @@ export interface UserStructure extends UserCredentials {
 }
 
 export interface CustomRequest extends Request {
-  id: string;
-}
-
-export interface CustomParamsRequest extends Request {
   userId: string;
   params: {
     recipeId: string;
   };
+  body: RecipeStructure;
 }

@@ -8,6 +8,7 @@ import Recipe from "../../../database/models/Recipe.js";
 import { mockRecipes, mockToken } from "../../../mocks/mocks.js";
 import app from "../../index.js";
 import paths from "../../utils/paths/paths.js";
+import { mockAddedRecipe } from "../../../mocks/mocks.js";
 
 let server: MongoMemoryServer;
 
@@ -27,6 +28,10 @@ afterEach(async () => {
 
 beforeEach(async () => {
   await Recipe.create(mockRecipes);
+});
+
+beforeEach(() => {
+  jest.clearAllMocks();
 });
 
 describe("Given a GET '/recipes' endpoint", () => {
@@ -53,6 +58,37 @@ describe("Given a DELETE '/recipes' endpoint", () => {
       const response = await request(app)
         .delete(`${paths.recipesControllers}/${mockRecipes[0]._id.toString()}`)
         .set("Authorization", `Bearer ${mockToken}`)
+        .expect(expectedStatus);
+
+      expect(response.body.message).toBe(expectedMessage);
+    });
+  });
+});
+
+describe("Given a POST '/recipes/add' endpoint", () => {
+  describe("When it receives a request with a user id and a recipe", () => {
+    test("Then it should respond with status 201 and the new recipe", async () => {
+      const expectedStatus = 201;
+
+      const response = await request(app)
+        .post("/recipes/add")
+        .set("Authorization", `Bearer ${mockToken}`)
+        .send(mockAddedRecipe)
+        .expect(expectedStatus);
+
+      expect(response.body.recipe.name).toBe(mockAddedRecipe.name);
+    });
+  });
+
+  describe("When it receives a request with an invalid token", () => {
+    test("Then it sholud respond with status 500 and 'General error", async () => {
+      const expectedStatus = 500;
+      const expectedMessage = "General error";
+
+      const response = await request(app)
+        .post("/recipes/add")
+        .set("Authorization", `Bearer adasdasdas`)
+        .send(mockAddedRecipe)
         .expect(expectedStatus);
 
       expect(response.body.message).toBe(expectedMessage);
