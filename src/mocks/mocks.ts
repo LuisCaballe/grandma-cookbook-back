@@ -1,7 +1,10 @@
 import { Types } from "mongoose";
 import { type FailedValidationRequest } from "../server/routers/user/types.js";
 import { type UserCredentials, type UserStructure } from "../server/types.js";
-import { type RecipeDatabaseStructure } from "../types.js";
+import {
+  type RecipeStructure,
+  type RecipeDatabaseStructure,
+} from "../types.js";
 
 export const mockUser: UserStructure = {
   name: "Luis",
@@ -63,3 +66,12 @@ export const mockRecipes: RecipeDatabaseStructure[] = [
     user: new Types.ObjectId("646fa0775a615cd9e3388ca9"),
   },
 ];
+
+export const mockAddedRecipe: RecipeStructure = {
+  name: "Fried egg",
+  imageUrl: "image1",
+  cookingTime: 10,
+  difficulty: "Easy",
+  directions: "Just fry a egg",
+  ingredients: "Oil, egg",
+};
