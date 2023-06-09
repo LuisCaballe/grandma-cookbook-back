@@ -2,7 +2,7 @@ import { type NextFunction, type Response } from "express";
 import { getRecipes, removeRecipe } from "./recipesControllers";
 import Recipe from "../../../database/models/Recipe";
 import { correctResponse } from "../../utils/responseData/responseData";
-import { type CustomParamsRequest, type CustomRequest } from "../../types";
+import { type CustomRequest } from "../../types";
 import { mockRecipes } from "../../../mocks/mocks";
 
 beforeEach(() => {
@@ -65,7 +65,7 @@ describe("Given a getRecipes controller", () => {
 });
 
 describe("Given a removeRecipe controller", () => {
-  const req: Partial<CustomParamsRequest> = {
+  const req: Partial<CustomRequest> = {
     params: {
       recipeId: mockRecipes[0]._id.toString(),
     },
@@ -85,7 +85,7 @@ describe("Given a removeRecipe controller", () => {
       });
 
       await removeRecipe(
-        req as CustomParamsRequest,
+        req as CustomRequest,
         res as Response,
         next as NextFunction
       );
@@ -103,7 +103,7 @@ describe("Given a removeRecipe controller", () => {
       });
 
       await removeRecipe(
-        req as CustomParamsRequest,
+        req as CustomRequest,
         res as Response,
         next as NextFunction
       );
@@ -121,7 +121,7 @@ describe("Given a removeRecipe controller", () => {
       });
 
       await removeRecipe(
-        req as CustomParamsRequest,
+        req as CustomRequest,
         res as Response,
         next as NextFunction
       );

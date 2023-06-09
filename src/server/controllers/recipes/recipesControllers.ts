@@ -1,15 +1,17 @@
 import { type NextFunction, type Response } from "express";
 import Recipe from "../../../database/models/Recipe.js";
-import { type CustomParamsRequest, type CustomRequest } from "../../types.js";
+import { type CustomRequest } from "../../types.js";
+import { Types } from "mongoose";
+import CustomError from "../../../CustomError/CustomError.js";
 
 export const getRecipes = async (
   req: CustomRequest,
   res: Response,
   next: NextFunction
 ) => {
-  const { id } = req;
+  const { userId } = req;
   try {
-    const recipes = await Recipe.find({ user: id }).limit(10).exec();
+    const recipes = await Recipe.find({ user: userId }).limit(10).exec();
 
     res.status(200).json({ recipes });
   } catch (error) {
@@ -18,7 +20,7 @@ export const getRecipes = async (
 };
 
 export const removeRecipe = async (
-  req: CustomParamsRequest,
+  req: CustomRequest,
   res: Response,
   next: NextFunction
 ) => {
@@ -33,6 +35,37 @@ export const removeRecipe = async (
     }
 
     res.status(200).json({ message: "Recipe deleted" });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const addRecipe = async (
+  req: CustomRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { userId } = req;
+    const addedRecipe = req.body;
+
+    const addedRecipeWithUserId = {
+      ...addedRecipe,
+      user: new Types.ObjectId(userId),
+    };
+
+    const newRecipe = await Recipe.create(addedRecipeWithUserId);
+
+    if (!newRecipe) {
+      const error = new CustomError(
+        400,
+        "Error: The recipe has not been added"
+      );
+
+      throw error;
+    }
+
+    res.status(201).json({ recipe: newRecipe });
   } catch (error) {
     next(error);
   }
