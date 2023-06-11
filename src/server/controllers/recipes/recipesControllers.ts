@@ -9,11 +9,20 @@ export const getRecipes = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { userId } = req;
-  try {
-    const recipes = await Recipe.find({ user: userId }).limit(10).exec();
+  const {
+    userId,
+    query: { limit, skip },
+  } = req;
 
-    res.status(200).json({ recipes });
+  try {
+    const recipes = await Recipe.find({ user: userId })
+      .sort({ _id: -1 })
+      .skip(Number(skip))
+      .limit(Number(limit))
+      .exec();
+    const totalRecipes = await Recipe.where().countDocuments();
+
+    res.status(200).json({ recipes, totalRecipes });
   } catch (error) {
     next(error);
   }
