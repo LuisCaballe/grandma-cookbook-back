@@ -11,7 +11,12 @@ beforeEach(() => {
 });
 
 describe("Given a getRecipes controller", () => {
-  const req = {};
+  const req: Partial<CustomRequest> = {
+    query: {
+      limit: "10",
+      skip: "20",
+    },
+  };
   const res: Partial<Response> = {
     status: jest.fn().mockReturnThis(),
     json: jest.fn(),
@@ -20,8 +25,14 @@ describe("Given a getRecipes controller", () => {
 
   describe("When it receives a response", () => {
     Recipe.find = jest.fn().mockReturnValue({
+      sort: jest.fn().mockReturnThis(),
+      skip: jest.fn().mockReturnThis(),
       limit: jest.fn().mockReturnThis(),
       exec: jest.fn().mockResolvedValue(mockRecipes),
+    });
+
+    Recipe.where = jest.fn().mockReturnValue({
+      countDocuments: jest.fn().mockReturnValue(mockRecipes.length),
     });
     test("Then it should call the response's method status with 200", async () => {
       const expectedStatus = correctResponse.statusCode;
@@ -42,7 +53,10 @@ describe("Given a getRecipes controller", () => {
         next as NextFunction
       );
 
-      expect(res.json).toHaveBeenCalledWith({ recipes: mockRecipes });
+      expect(res.json).toHaveBeenCalledWith({
+        recipes: mockRecipes,
+        totalRecipes: mockRecipes.length,
+      });
     });
   });
   describe("When it receives a next function and the exec method rejects with an 'Error connecting to database' error", () => {
@@ -50,6 +64,8 @@ describe("Given a getRecipes controller", () => {
       const expectedError = new Error("Error connecting to database");
 
       Recipe.find = jest.fn().mockReturnValue({
+        sort: jest.fn().mockReturnThis(),
+        skip: jest.fn().mockReturnThis(),
         limit: jest.fn().mockReturnThis(),
         exec: jest.fn().mockRejectedValue(expectedError),
       });

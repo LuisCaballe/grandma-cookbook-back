@@ -23,4 +23,8 @@ export interface CustomRequest extends Request {
     recipeId: string;
   };
   body: RecipeStructure;
+  query: {
+    skip: string;
+    limit: string;
+  };
 }
