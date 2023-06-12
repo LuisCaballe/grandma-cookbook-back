@@ -1,5 +1,10 @@
 import { type NextFunction, type Response } from "express";
-import { addRecipe, getRecipes, removeRecipe } from "./recipesControllers";
+import {
+  addRecipe,
+  getRecipeById,
+  getRecipes,
+  removeRecipe,
+} from "./recipesControllers";
 import Recipe from "../../../database/models/Recipe";
 import { correctResponse } from "../../utils/responseData/responseData";
 import { type CustomRequest } from "../../types";
@@ -196,6 +201,69 @@ describe("Given an addRecipe controller", () => {
       Recipe.create = jest.fn().mockResolvedValue(undefined);
 
       await addRecipe(
+        req as CustomRequest,
+        res as Response,
+        next as NextFunction
+      );
+
+      expect(next).toHaveBeenCalledWith(expectedError);
+    });
+  });
+});
+
+describe("Given a getRecipeById controller", () => {
+  const req: Partial<CustomRequest> = {
+    params: {
+      recipeId: mockRecipes[0]._id.toString(),
+    },
+  };
+  const res: Partial<Response> = {
+    status: jest.fn().mockReturnThis(),
+    json: jest.fn(),
+  };
+  const next = jest.fn();
+
+  describe("When it receives a valid recipe id", () => {
+    test("Then it should call the response's method status with 200", async () => {
+      const expectedStatus = 200;
+
+      Recipe.findById = jest.fn().mockReturnValue({
+        exec: jest.fn().mockResolvedValue(mockRecipes[0]),
+      });
+
+      await getRecipeById(
+        req as CustomRequest,
+        res as Response,
+        next as NextFunction
+      );
+
+      expect(res.status).toHaveBeenCalledWith(expectedStatus);
+    });
+
+    test("Then it should call the response's method json with the recipe", async () => {
+      Recipe.findById = jest.fn().mockReturnValue({
+        exec: jest.fn().mockResolvedValue(mockRecipes[0]),
+      });
+
+      await getRecipeById(
+        req as CustomRequest,
+        res as Response,
+        next as NextFunction
+      );
+
+      expect(res.json).toHaveBeenCalledWith({ recipeById: mockRecipes[0] });
+    });
+  });
+
+  describe("When it receives a invalid recipe id", () => {
+    test("Then it should call the response's method status with 404", async () => {
+      const expectedError = new CustomError(404, "Recipe not found");
+
+      Recipe.findById = jest.fn().mockReturnValue({
+        exec: jest.fn().mockResolvedValue(undefined),
+      });
+
+      await getRecipeById(
         req as CustomRequest,
         res as Response,
         next as NextFunction

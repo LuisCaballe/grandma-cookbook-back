@@ -79,3 +79,25 @@ export const addRecipe = async (
     next(error);
   }
 };
+
+export const getRecipeById = async (
+  req: CustomRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { recipeId } = req.params;
+
+    const selectedRecipe = await Recipe.findById(recipeId).exec();
+
+    if (!selectedRecipe) {
+      const error = new CustomError(404, "Recipe not found");
+
+      throw error;
+    }
+
+    res.status(200).json({ recipeById: selectedRecipe });
+  } catch (error) {
+    next(error);
+  }
+};
