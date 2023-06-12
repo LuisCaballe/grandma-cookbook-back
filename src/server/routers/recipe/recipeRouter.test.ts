@@ -5,7 +5,7 @@ import connectToDatabase from "../../../database/connectToDatabase.js";
 import mongoose from "mongoose";
 import request from "supertest";
 import Recipe from "../../../database/models/Recipe.js";
-import { mockRecipes, mockToken } from "../../../mocks/mocks.js";
+import { mockRecipes, mockRecipesId, mockToken } from "../../../mocks/mocks.js";
 import app from "../../index.js";
 import paths from "../../utils/paths/paths.js";
 import { mockAddedRecipe } from "../../../mocks/mocks.js";
@@ -92,6 +92,21 @@ describe("Given a POST '/recipes/add' endpoint", () => {
         .expect(expectedStatus);
 
       expect(response.body.message).toBe(expectedMessage);
+    });
+  });
+});
+
+describe("Given a GET '/recipes/:recipeId' endpoint", () => {
+  describe("When it receives a request with valid authorization and a valid recipe id", () => {
+    test("Then it should respond with status 200 and a recipe with the same id'", async () => {
+      const expectedStatus = 200;
+
+      const response = await request(app)
+        .get(`${paths.recipesControllers}/${mockRecipesId[0].id}`)
+        .set("Authorization", `Bearer ${mockToken}`)
+        .expect(expectedStatus);
+
+      expect(response.body.recipeById).toStrictEqual(mockRecipesId[0]);
     });
   });
 });

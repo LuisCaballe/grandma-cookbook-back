@@ -4,6 +4,7 @@ import { type UserCredentials, type UserStructure } from "../server/types.js";
 import {
   type RecipeStructure,
   type RecipeDatabaseStructure,
+  type RecipeDatabaseStructureId,
 } from "../types.js";
 
 export const mockUser: UserStructure = {
@@ -75,3 +76,16 @@ export const mockAddedRecipe: RecipeStructure = {
   directions: "Just fry a egg",
   ingredients: "Oil, egg",
 };
+
+export const mockRecipesId: RecipeDatabaseStructureId[] = [
+  {
+    id: "647100635a615cd9e3388cab",
+    name: "Fried egg",
+    imageUrl: "image1",
+    cookingTime: 10,
+    difficulty: "Easy",
+    directions: "Just fry a egg",
+    ingredients: "Oil, egg",
+    user: "646fa0775a615cd9e3388ca9",
+  },
+];
