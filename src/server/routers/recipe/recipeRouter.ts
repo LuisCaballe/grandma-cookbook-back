@@ -2,6 +2,7 @@ import { Router } from "express";
 import auth from "../../middlewares/authMiddleware/authMiddleware.js";
 import {
   addRecipe,
+  getRecipeById,
   getRecipes,
   removeRecipe,
 } from "../../controllers/recipes/recipesControllers.js";
@@ -20,5 +21,7 @@ recipeRouter.post(
   validate(recipeSchema, {}, { abortEarly: false }),
   addRecipe
 );
+
+recipeRouter.get("/:recipeId", auth, getRecipeById);
 
 export default recipeRouter;
