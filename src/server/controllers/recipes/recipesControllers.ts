@@ -20,7 +20,7 @@ export const getRecipes = async (
       .skip(Number(skip))
       .limit(Number(limit))
       .exec();
-    const totalRecipes = await Recipe.where().countDocuments();
+    const totalRecipes = await Recipe.where({ user: userId }).countDocuments();
 
     res.status(200).json({ recipes, totalRecipes });
   } catch (error) {
