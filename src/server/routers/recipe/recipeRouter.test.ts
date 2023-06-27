@@ -5,7 +5,12 @@ import connectToDatabase from "../../../database/connectToDatabase.js";
 import mongoose from "mongoose";
 import request from "supertest";
 import Recipe from "../../../database/models/Recipe.js";
-import { mockRecipes, mockRecipesId, mockToken } from "../../../mocks/mocks.js";
+import {
+  mockRecipes,
+  mockRecipesId,
+  mockToken,
+  mockUpdatedRecipe,
+} from "../../../mocks/mocks.js";
 import app from "../../index.js";
 import paths from "../../utils/paths/paths.js";
 import { mockAddedRecipe } from "../../../mocks/mocks.js";
@@ -107,6 +112,23 @@ describe("Given a GET '/recipes/:recipeId' endpoint", () => {
         .expect(expectedStatus);
 
       expect(response.body.recipeById).toStrictEqual(mockRecipesId[0]);
+    });
+  });
+});
+
+describe("Given a PUT '/recipes/update/:recipeId' endpoint", () => {
+  describe("When it receives a request with valid authorization, a valid recipe id and a valid updated recipe data", () => {
+    test("Then it should respond with status 200 and the message 'Recipe updated successfully'", async () => {
+      const expectedStatus = 200;
+      const expectedMessage = "Recipe updated successfully";
+
+      const response = await request(app)
+        .put(`${paths.recipesControllers}/update/${mockRecipesId[0].id}`)
+        .set("Authorization", `Bearer ${mockToken}`)
+        .send(mockUpdatedRecipe)
+        .expect(expectedStatus);
+
+      expect(response.body.message).toBe(expectedMessage);
     });
   });
 });
