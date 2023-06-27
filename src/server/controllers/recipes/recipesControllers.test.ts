@@ -4,11 +4,16 @@ import {
   getRecipeById,
   getRecipes,
   removeRecipe,
+  updateRecipe,
 } from "./recipesControllers";
 import Recipe from "../../../database/models/Recipe";
 import { correctResponse } from "../../utils/responseData/responseData";
 import { type CustomRequest } from "../../types";
-import { mockAddedRecipe, mockRecipes } from "../../../mocks/mocks";
+import {
+  mockAddedRecipe,
+  mockRecipes,
+  mockUpdatedRecipe,
+} from "../../../mocks/mocks";
 import CustomError from "../../../CustomError/CustomError";
 
 beforeEach(() => {
@@ -264,6 +269,67 @@ describe("Given a getRecipeById controller", () => {
       });
 
       await getRecipeById(
+        req as CustomRequest,
+        res as Response,
+        next as NextFunction
+      );
+
+      expect(next).toHaveBeenCalledWith(expectedError);
+    });
+  });
+});
+
+describe("Given an updateRecipe controller", () => {
+  const req: Partial<CustomRequest> = {
+    params: {
+      recipeId: mockRecipes[0]._id.toString(),
+    },
+    body: mockUpdatedRecipe,
+  };
+  const next = jest.fn();
+  const res: Partial<Response> = {
+    status: jest.fn().mockReturnThis(),
+    json: jest.fn(),
+  };
+  describe("When it receives a valid recipe id and a valid updated recipe data", () => {
+    test("Then it should call the response's method status with 200", async () => {
+      const expectedStatus = 200;
+
+      Recipe.findByIdAndUpdate = jest.fn().mockReturnValue({
+        exec: jest.fn(),
+      });
+
+      await updateRecipe(
+        req as CustomRequest,
+        res as Response,
+        next as NextFunction
+      );
+
+      expect(res.status).toHaveBeenCalledWith(expectedStatus);
+    });
+
+    test("Then it should call the response's method json with the message 'Recipe updated successfully'", async () => {
+      const expectedMessage = "Recipe updated successfully";
+
+      await updateRecipe(
+        req as CustomRequest,
+        res as Response,
+        next as NextFunction
+      );
+
+      expect(res.json).toHaveBeenCalledWith({ message: expectedMessage });
+    });
+  });
+
+  describe("When it receives a next function and the exec method rejects with an error", () => {
+    test("Then it should call the next function with the error", async () => {
+      const expectedError = new Error("Error connecting to database");
+
+      Recipe.findByIdAndUpdate = jest.fn().mockReturnValue({
+        exec: jest.fn().mockRejectedValue(expectedError),
+      });
+
+      await updateRecipe(
         req as CustomRequest,
         res as Response,
         next as NextFunction

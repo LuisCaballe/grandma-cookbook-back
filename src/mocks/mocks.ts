@@ -77,6 +77,15 @@ export const mockAddedRecipe: RecipeStructure = {
   ingredients: "Oil, egg",
 };
 
+export const mockUpdatedRecipe: RecipeStructure = {
+  name: "Delicious Fried egg",
+  imageUrl: "image1",
+  cookingTime: 10,
+  difficulty: "Easy",
+  directions: "Just fry a egg",
+  ingredients: "Oil, egg",
+};
+
 export const mockRecipesId: RecipeDatabaseStructureId[] = [
   {
     id: "647100635a615cd9e3388cab",

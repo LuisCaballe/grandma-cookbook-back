@@ -5,6 +5,7 @@ import {
   getRecipeById,
   getRecipes,
   removeRecipe,
+  updateRecipe,
 } from "../../controllers/recipes/recipesControllers.js";
 import { validate } from "express-validation";
 import recipeSchema from "../../../schemas/recipeSchema.js";
@@ -23,5 +24,12 @@ recipeRouter.post(
 );
 
 recipeRouter.get("/:recipeId", auth, getRecipeById);
+
+recipeRouter.put(
+  "/update/:recipeId",
+  auth,
+  validate(recipeSchema, {}, { abortEarly: false }),
+  updateRecipe
+);
 
 export default recipeRouter;
