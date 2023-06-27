@@ -101,3 +101,20 @@ export const getRecipeById = async (
     next(error);
   }
 };
+
+export const updateRecipe = async (
+  req: CustomRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { recipeId } = req.params;
+    const updatedRecipeData = req.body;
+
+    await Recipe.findByIdAndUpdate(recipeId, updatedRecipeData).exec();
+
+    res.status(200).json({ message: "Recipe updated successfully" });
+  } catch (error) {
+    next(error);
+  }
+};
