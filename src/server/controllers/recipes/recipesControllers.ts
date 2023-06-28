@@ -11,16 +11,25 @@ export const getRecipes = async (
 ) => {
   const {
     userId,
-    query: { limit, skip },
+    query: { limit, skip, filter },
   } = req;
 
+  let query: Record<string, unknown> = { user: userId };
+
+  if (filter) {
+    query = {
+      user: userId,
+      difficulty: filter,
+    };
+  }
+
   try {
-    const recipes = await Recipe.find({ user: userId })
+    const recipes = await Recipe.find(query)
       .sort({ _id: -1 })
       .skip(Number(skip))
       .limit(Number(limit))
       .exec();
-    const totalRecipes = await Recipe.where({ user: userId }).countDocuments();
+    const totalRecipes = await Recipe.where(query).countDocuments();
 
     res.status(200).json({ recipes, totalRecipes });
   } catch (error) {

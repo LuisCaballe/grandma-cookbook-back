@@ -26,5 +26,6 @@ export interface CustomRequest extends Request {
   query: {
     skip: string;
     limit: string;
+    filter?: "Easy" | "Moderate" | "Advanced";
   };
 }
