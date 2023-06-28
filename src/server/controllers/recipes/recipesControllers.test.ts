@@ -25,6 +25,7 @@ describe("Given a getRecipes controller", () => {
     query: {
       limit: "10",
       skip: "20",
+      filter: "Easy",
     },
   };
   const res: Partial<Response> = {
@@ -33,7 +34,7 @@ describe("Given a getRecipes controller", () => {
   };
   const next = jest.fn();
 
-  describe("When it receives a response", () => {
+  describe("When it receives a request with an user id, a response, and a filter", () => {
     Recipe.find = jest.fn().mockReturnValue({
       sort: jest.fn().mockReturnThis(),
       skip: jest.fn().mockReturnThis(),
