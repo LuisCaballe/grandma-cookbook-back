@@ -53,7 +53,7 @@
           "bearer": [
             {
               "key": "token",
-              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDZmYTA3NzVhNjE1Y2Q5ZTMzODhjYTkiLCJuYW1lIjoiQWRtaW4iLCJpYXQiOjE2ODU2NDcyNzQsImV4cCI6MTY4NjA3OTI3NH0.aiBxmdtOcJZS1LnZfZWLgL2DvgqDi2_m6henn3hlOAU",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDZmYTA3NzVhNjE1Y2Q5ZTMzODhjYTkiLCJuYW1lIjoiQWRtaW4iLCJpYXQiOjE2ODg3MjIwMjh9.nYjO41Ze1SzqA-lgl-sWfos1qVbnguZPK3A-znJZ3rg",
               "type": "string"
             }
           ]
@@ -66,6 +66,130 @@
           "host": ["localhost"],
           "port": "4000",
           "path": ["recipes"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GET /recipes?filter",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDZmYTA3NzVhNjE1Y2Q5ZTMzODhjYTkiLCJuYW1lIjoiQWRtaW4iLCJpYXQiOjE2ODg3MjIwMjh9.nYjO41Ze1SzqA-lgl-sWfos1qVbnguZPK3A-znJZ3rg",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:4000/recipes?filter=Easy",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "4000",
+          "path": ["recipes"],
+          "query": [
+            {
+              "key": "filter",
+              "value": "Easy"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "DELETE /recipes",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDZmYTA3NzVhNjE1Y2Q5ZTMzODhjYTkiLCJuYW1lIjoiQWRtaW4iLCJpYXQiOjE2ODg3MjIwMjh9.nYjO41Ze1SzqA-lgl-sWfos1qVbnguZPK3A-znJZ3rg",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:4000/recipes/647d068a5a615cd9e3388cc0",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "4000",
+          "path": ["recipes", "647d068a5a615cd9e3388cc0"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "POST /recipes/add",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDZmYTA3NzVhNjE1Y2Q5ZTMzODhjYTkiLCJuYW1lIjoiQWRtaW4iLCJpYXQiOjE2ODg3MjIwMjh9.nYjO41Ze1SzqA-lgl-sWfos1qVbnguZPK3A-znJZ3rg",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"name\": \"Patatas fritas\",\n    \"imageUrl\": \"https://images.ecestaticos.com/NUGiyDG23xTz3Ft3uQKXWHB4pu4=/0x118:1282x841/1600x900/filters:fill(white):format(jpg)/f.elconfidencial.com%2Foriginal%2F220%2F921%2F965%2F220921965911989acfa5ebedfbca3912.jpg\",\n    \"cookingTime\": 15,\n    \"ingredients\": \"Oil, potatoes\",\n    \"directions\": \"Just fry some potatoes and enjoy\",\n    \"difficulty\": \"Easy\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:4000/recipes/add",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "4000",
+          "path": ["recipes", "add"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "PUT /recipes/update",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDZmYTA3NzVhNjE1Y2Q5ZTMzODhjYTkiLCJuYW1lIjoiQWRtaW4iLCJpYXQiOjE2ODg3MjIwMjh9.nYjO41Ze1SzqA-lgl-sWfos1qVbnguZPK3A-znJZ3rg",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"name\": \"Delicious patatas fritas\",\n    \"imageUrl\": \"https://images.ecestaticos.com/NUGiyDG23xTz3Ft3uQKXWHB4pu4=/0x118:1282x841/1600x900/filters:fill(white):format(jpg)/f.elconfidencial.com%2Foriginal%2F220%2F921%2F965%2F220921965911989acfa5ebedfbca3912.jpg\",\n    \"cookingTime\": 15,\n    \"ingredients\": \"Oil, potatoes\",\n    \"directions\": \"Just fry some potatoes and enjoy\",\n    \"difficulty\": \"Moderate\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:4000/recipes/update/64a7dbb3abd17d464d5c29f9",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "4000",
+          "path": ["recipes", "update", "64a7dbb3abd17d464d5c29f9"]
         }
       },
       "response": []

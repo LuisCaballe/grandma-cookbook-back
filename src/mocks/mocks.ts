@@ -36,7 +36,7 @@ export const mockedUser: UserStructure = {
 };
 
 export const mockToken =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDZmYTA3NzVhNjE1Y2Q5ZTMzODhjYTkiLCJuYW1lIjoiQWRtaW4iLCJpYXQiOjE2ODYyNDA0ODMsImV4cCI6MTY4ODgzMjQ4M30.PWLMYB32veBysHcp1HDB0xYCSAqqu1plOzGO4UZktc8";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDZmYTA3NzVhNjE1Y2Q5ZTMzODhjYTkiLCJuYW1lIjoiQWRtaW4iLCJpYXQiOjE2ODg3MjIwMjh9.nYjO41Ze1SzqA-lgl-sWfos1qVbnguZPK3A-znJZ3rg";
 
 export const mockTokenPayload = {
   sub: "646fa0775a615cd9e3388ca9",
